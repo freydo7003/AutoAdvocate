@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AutoAdvocate - Repair Review</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background:#f4f7fb;
+    padding:40px;
+}
+
+.container {
+    max-width:700px;
+    background:white;
+    margin:auto;
+    padding:30px;
+    border-radius:15px;
+}
+
+input, textarea {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+}
+
+button {
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+}
+
+.report {
+    margin-top:25px;
+    background:#eef2ff;
+    padding:20px;
+    border-radius:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>Repair Estimate Review</h1>
+
+<p>
+Tell AutoAdvocate what the shop recommended.
+</p>
+
+
+<label>Repair Recommended</label>
+
+<input id="repair" placeholder="Example: Replace Alternator">
+
+
+<label>Vehicle</label>
+
+<input id="vehicle" placeholder="Example: 2015 Ford F-150">
+
+
+<label>Estimated Cost</label>
+
+<input id="cost" placeholder="Example: $1200">
+
+
+<button onclick="reviewRepair()">
+Review Repair
+</button>
+
+
+<div class="report" id="report">
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+function reviewRepair(){
+
+
+let repair =
+document.getElementById("repair").value.toLowerCase();
+
+
+let vehicle =
+document.getElementById("vehicle").value;
+
+
+let cost =
+document.getElementById("cost").value;
+
+
+let report =
+document.getElementById("report");
+
+
+
+if(repair.includes("alternator")){
+
+
+report.innerHTML = `
+
+<h2>Repair Review</h2>
+
+
+<b>Vehicle:</b> ${vehicle}
+
+
+<h3>Alternator Replacement</h3>
+
+
+<p>
+This is a common repair. Before approving,
+verify that testing confirmed the alternator failure.
+</p>
+
+
+<h3>Things to ask:</h3>
+
+<ul>
+
+<li>Was charging voltage tested?</li>
+
+<li>Was the battery tested separately?</li>
+
+<li>Was the belt system inspected?</li>
+
+</ul>
+
+
+<h3>Price Review</h3>
+
+<p>
+Quoted price: ${cost}
+</p>
+
+<p>
+Cost depends on parts quality, labor rates,
+and vehicle access. Ask for a parts and labor breakdown.
+</p>
+
+
+<h3>AutoAdvocate Recommendation</h3>
+
+<p>
+Do not approve based only on the symptom.
+Ask what diagnostic test proved the alternator failed.
+</p>
+
+`;
+
+}
+
+
+else {
+
+
+report.innerHTML = `
+
+<h2>Repair Review</h2>
+
+<p>
+This repair is not in our prototype database yet.
+More repair guides will be added.
+</p>
+
+`;
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
