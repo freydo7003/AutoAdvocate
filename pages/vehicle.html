@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>AutoAdvocate - My Vehicle</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background:#f4f7fb;
+    padding:40px;
+}
+
+.container {
+    max-width:600px;
+    background:white;
+    margin:auto;
+    padding:30px;
+    border-radius:15px;
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+button {
+    background:#2563eb;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#vehicleResult {
+    margin-top:20px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>My Vehicle</h1>
+
+<p>
+Tell AutoAdvocate about your vehicle.
+</p>
+
+
+<label>Year</label>
+<input id="year" placeholder="Example: 2017">
+
+
+<label>Make</label>
+<input id="make" placeholder="Example: Ford">
+
+
+<label>Model</label>
+<input id="model" placeholder="Example: F-150">
+
+
+<label>Engine</label>
+<input id="engine" placeholder="Example: 5.0L V8">
+
+
+<label>Mileage</label>
+<input id="mileage" placeholder="Example: 125000">
+
+
+<button onclick="saveVehicle()">
+Save Vehicle
+</button>
+
+
+<div id="vehicleResult"></div>
+
+
+</div>
+
+
+<script>
+
+function saveVehicle(){
+
+let year=document.getElementById("year").value;
+let make=document.getElementById("make").value;
+let model=document.getElementById("model").value;
+let engine=document.getElementById("engine").value;
+let mileage=document.getElementById("mileage").value;
+
+
+document.getElementById("vehicleResult").innerHTML =
+`
+Vehicle Saved:<br><br>
+${year} ${make} ${model}<br>
+Engine: ${engine}<br>
+Mileage: ${mileage}
+`;
+
+}
+
+</script>
+
+
+</body>
+
+</html>
