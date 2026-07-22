@@ -44,6 +44,17 @@ export default function Home() {
     Analyze repair
   </Link>
 </div>
+<div className="card">
+  <h2>📄 Scan My Repair Estimate</h2>
+
+  <p className="muted">
+    Upload a photo or PDF of your repair estimate and let AutoAdvocate review it.
+  </p>
+
+  <Link className="btn" href="/scan">
+    Scan Estimate
+  </Link>
+</div>
         </div>
       </main>
     </>
