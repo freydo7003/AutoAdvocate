@@ -35,6 +35,15 @@ export default function Home() {
             <p className="muted">Create a vehicle profile so future guidance can become model-specific.</p>
             <Link className="btn" href="/vehicle">Add vehicle</Link>
           </div>
+          <div className="card">
+  <h2>Analyze My Repair</h2>
+  <p className="muted">
+    Compare your symptoms, trouble code, and the repair shop's recommendation.
+  </p>
+  <Link className="btn" href="/analyze">
+    Analyze repair
+  </Link>
+</div>
         </div>
       </main>
     </>
