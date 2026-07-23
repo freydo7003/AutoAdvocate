@@ -16,12 +16,39 @@ export default function AnalyzeRepairPage() {
   const [symptoms, setSymptoms] = useState("");
   const [shopRecommendation, setShopRecommendation] = useState("");
   const [result, setResult] = useState<AnalysisResult | null>(null);
-
-  function analyzeRepair(event: FormEvent<HTMLFormElement>) {
+const [aiAnalysis, setAiAnalysis] = useState("");
+const [isLoading, setIsLoading] = useState(false);
+async function analyzeRepair(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
+setIsLoading(true);
+setAiAnalysis("");
     const normalizedCode = code.trim().toUpperCase();
     const recommendation = shopRecommendation.toLowerCase();
+ try {
+  const response = await fetch("/api/analyze", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      repairText: `
+Vehicle: ${vehicle}
+Code: ${code}
+Symptoms: ${symptoms}
+Shop Recommendation: ${shopRecommendation}
+      `,
+    }),
+  });
+
+  const data = await response.json();
+
+  setAiAnalysis(data.analysis);
+} catch (error) {
+  console.error(error);
+  setAiAnalysis("Unable to contact the AI.");
+} finally {
+  setIsLoading(false);
+}   
 if (
   normalizedCode === "P0302" &&
   (recommendation.includes("spark plug") ||
@@ -201,7 +228,19 @@ if (
           </button>
         </form>
       </section>
+{isLoading && (
+  <div className="card">
+    <h2>AutoAdvocate AI Analysis</h2>
+    <p>Analyzing your repair information...</p>
+  </div>
+)}
 
+{aiAnalysis && (
+  <div className="card">
+    <h2>🤖 AutoAdvocate AI Analysis</h2>
+    <p style={{ whiteSpace: "pre-wrap" }}>{aiAnalysis}</p>
+  </div>
+)}
       {result && (
         <section className="card">
           <p className="eyebrow">AutoAdvocate Review</p>
