@@ -1,7 +1,12 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
+import ReportCard from "../../components/ReportCard";
+import VerdictCard from "../../components/VerdictCard";
+import TimelineCard from "../../components/TimelineCard";
+import SummaryCard from "../../components/SummaryCard";
+import ReportHeader from "../../components/ReportHeader";
+import ConfidenceCard from "../../components/ConfidenceCard";
 type AnalysisResult = {
   verdict: string;
   heading: string;
@@ -9,19 +14,60 @@ type AnalysisResult = {
   questions: string[];
   nextChecks: string[];
 };
-
+type AIAnalysisResult = {
+  severity: "high" | "medium" | "low";
+  urgency: "immediate" | "soon" | "routine";
+  verdict: string;
+  summary: string;
+  concerns: string[];
+  likelyCauses: string[];
+  recommendedTests: string[];
+  questions: string[];
+  spendingAdvice: string;
+  estimatedCost: string;
+  repairTime: string;
+  safeToDrive: "yes" | "no" | "limited";
+  confidence: number;
+confidenceReason: string;
+};
 export default function AnalyzeRepairPage() {
   const [vehicle, setVehicle] = useState("");
   const [code, setCode] = useState("");
   const [symptoms, setSymptoms] = useState("");
   const [shopRecommendation, setShopRecommendation] = useState("");
   const [result, setResult] = useState<AnalysisResult | null>(null);
-const [aiAnalysis, setAiAnalysis] = useState("");
+const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisResult | null>(null);
 const [isLoading, setIsLoading] = useState(false);
+function getVerdictStyle(severity: AIAnalysisResult["severity"]) {
+  if (severity === "high") {
+    return {
+      backgroundColor: "#fee2e2",
+      borderLeft: "6px solid #dc2626",
+      padding: "16px",
+      borderRadius: "8px",
+    };
+  }
+
+  if (severity === "medium") {
+    return {
+      backgroundColor: "#fef3c7",
+      borderLeft: "6px solid #d97706",
+      padding: "16px",
+      borderRadius: "8px",
+    };
+  }
+
+  return {
+    backgroundColor: "#dcfce7",
+    borderLeft: "6px solid #16a34a",
+    padding: "16px",
+    borderRadius: "8px",
+  };
+}
 async function analyzeRepair(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 setIsLoading(true);
-setAiAnalysis("");
+setAiAnalysis(null);
     const normalizedCode = code.trim().toUpperCase();
     const recommendation = shopRecommendation.toLowerCase();
  try {
@@ -41,11 +87,11 @@ Shop Recommendation: ${shopRecommendation}
   });
 
   const data = await response.json();
-
+console.log(data.analysis);
   setAiAnalysis(data.analysis);
 } catch (error) {
   console.error(error);
-  setAiAnalysis("Unable to contact the AI.");
+  setAiAnalysis(null);
 } finally {
   setIsLoading(false);
 }   
@@ -236,10 +282,98 @@ if (
 )}
 
 {aiAnalysis && (
-  <div className="card">
-    <h2>🤖 AutoAdvocate AI Analysis</h2>
-    <p style={{ whiteSpace: "pre-wrap" }}>{aiAnalysis}</p>
-  </div>
+  <section className="card">
+<ReportHeader
+  vehicle={vehicle}
+  code={code}
+  repairText={`Symptoms: ${symptoms}. Shop recommendation: ${shopRecommendation}.`}
+/>
+
+<div className="report-actions">
+  <button
+    type="button"
+    className="print-button"
+   onClick={() => {
+  const originalTitle = document.title;
+
+  const safeVehicle = vehicle
+    .trim()
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  const safeCode = code
+    .trim()
+    .toUpperCase()
+    .replace(/[^a-zA-Z0-9]+/g, "-");
+
+  document.title = `AutoAdvocate-${safeVehicle}-${safeCode}`;
+
+  window.print();
+
+  document.title = originalTitle;
+}}
+  >
+    🖨️ Print / Save PDF
+  </button>
+</div>
+
+<SummaryCard
+  severity={aiAnalysis.severity}
+  estimatedCost={aiAnalysis.estimatedCost}
+  repairTime={aiAnalysis.repairTime}
+  safeToDrive={aiAnalysis.safeToDrive}
+  urgency={aiAnalysis.urgency}
+/>
+<ConfidenceCard
+  confidence={aiAnalysis.confidence}
+  confidenceReason={aiAnalysis.confidenceReason}
+/>
+<VerdictCard
+  severity={aiAnalysis.severity}
+  verdict={aiAnalysis.verdict}
+/>
+
+<TimelineCard urgency={aiAnalysis.urgency} />
+<ReportCard title="What's Happening" icon="🚗">
+  <p>{aiAnalysis.summary}</p>
+</ReportCard>
+
+<ReportCard title="Concerns" icon="⚠️">
+  <ul>
+    {aiAnalysis.concerns.map((concern, index) => (
+      <li key={index}>{concern}</li>
+    ))}
+  </ul>
+</ReportCard>
+
+<ReportCard title="Likely Causes" icon="🔧">
+  <ul>
+    {aiAnalysis.likelyCauses.map((cause, index) => (
+      <li key={index}>{cause}</li>
+    ))}
+  </ul>
+</ReportCard>
+
+ <ReportCard title="Recommended Tests" icon="🧪">
+  <ul>
+    {aiAnalysis.recommendedTests.map((test, index) => (
+      <li key={index}>{test}</li>
+    ))}
+  </ul>
+</ReportCard>
+
+<ReportCard title="Questions for the Shop" icon="❓">
+  <ul>
+    {aiAnalysis.questions.map((question, index) => (
+      <li key={index}>{question}</li>
+    ))}
+  </ul>
+</ReportCard>
+
+<ReportCard title="Before You Spend Money" icon="💰">
+  <p>{aiAnalysis.spendingAdvice}</p>
+</ReportCard>
+  </section>
 )}
       {result && (
         <section className="card">
