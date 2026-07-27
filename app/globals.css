@@ -406,3 +406,156 @@ footer { text-align: center; color: var(--muted); padding: 30px 20px; }
   opacity: .9;
   letter-spacing: .5px;
 }
+.repair-cost-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.repair-cost-item {
+  padding: 18px;
+  border: 1px solid #dbe3ee;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.repair-cost-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.repair-cost-value {
+  color: #0f172a;
+  font-size: 1.35rem;
+}
+
+.repair-cost-parts {
+  margin-top: 8px;
+}
+
+.repair-cost-parts h4 {
+  margin-bottom: 10px;
+}
+
+.repair-cost-parts ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.repair-cost-parts li {
+  margin-bottom: 8px;
+}
+
+.repair-cost-note {
+  margin-top: 18px;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 650px) {
+  .repair-cost-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.fairness-score-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.fairness-score-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.fairness-score-rating {
+  display: block;
+  font-size: 1.3rem;
+}
+
+.fairness-score-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.fairness-score-track {
+  width: 100%;
+  height: 16px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+.fairness-score-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.fairness-score-good {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.fairness-score-warning {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.fairness-score-bad {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.fairness-score-explanation {
+  margin-top: 18px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+@media (max-width: 650px) {
+  .fairness-score-box {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+.estimate-upload {
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.estimate-upload label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.estimate-upload input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.estimate-file-name {
+  margin: 12px 0 0;
+  color: #334155;
+  font-size: 0.95rem;
+}

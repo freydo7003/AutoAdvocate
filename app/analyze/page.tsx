@@ -7,6 +7,8 @@ import TimelineCard from "../../components/TimelineCard";
 import SummaryCard from "../../components/SummaryCard";
 import ReportHeader from "../../components/ReportHeader";
 import ConfidenceCard from "../../components/ConfidenceCard";
+import RepairCostCard from "../../components/RepairCostCard";
+import FairnessScoreCard from "../../components/FairnessScoreCard";
 type AnalysisResult = {
   verdict: string;
   heading: string;
@@ -29,6 +31,11 @@ type AIAnalysisResult = {
   safeToDrive: "yes" | "no" | "limited";
   confidence: number;
 confidenceReason: string;
+fairnessScore: number;
+fairnessRating: string;
+fairnessExplanation: string;
+
+actionItems: string[];
 };
 export default function AnalyzeRepairPage() {
   const [vehicle, setVehicle] = useState("");
@@ -38,6 +45,7 @@ export default function AnalyzeRepairPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
 const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisResult | null>(null);
 const [isLoading, setIsLoading] = useState(false);
+const [estimateFile, setEstimateFile] = useState<File | null>(null);
 function getVerdictStyle(severity: AIAnalysisResult["severity"]) {
   if (severity === "high") {
     return {
@@ -269,9 +277,31 @@ if (
             />
           </label>
 
-          <button className="btn" type="submit">
-            Analyze My Repair
-          </button>
+<div className="estimate-upload">
+  <label htmlFor="estimateFile">
+    📄 Upload Repair Estimate (Optional)
+  </label>
+
+  <input
+    id="estimateFile"
+    type="file"
+    accept=".pdf,.png,.jpg,.jpeg"
+    onChange={(event) => {
+      const selectedFile = event.target.files?.[0] ?? null;
+      setEstimateFile(selectedFile);
+    }}
+  />
+
+  {estimateFile && (
+    <p className="estimate-file-name">
+      Selected file: <strong>{estimateFile.name}</strong>
+    </p>
+  )}
+</div>
+
+<button className="btn" type="submit">
+  Analyze My Repair
+</button>
         </form>
       </section>
 {isLoading && (
@@ -324,6 +354,16 @@ if (
   safeToDrive={aiAnalysis.safeToDrive}
   urgency={aiAnalysis.urgency}
 />
+<FairnessScoreCard
+  score={aiAnalysis.fairnessScore}
+  rating={aiAnalysis.fairnessRating}
+  explanation={aiAnalysis.fairnessExplanation}
+/>
+<RepairCostCard
+  estimatedCost={aiAnalysis.estimatedCost}
+  repairTime={aiAnalysis.repairTime}
+  likelyCauses={aiAnalysis.likelyCauses}
+/>
 <ConfidenceCard
   confidence={aiAnalysis.confidence}
   confidenceReason={aiAnalysis.confidenceReason}
@@ -331,6 +371,8 @@ if (
 <VerdictCard
   severity={aiAnalysis.severity}
   verdict={aiAnalysis.verdict}
+  fairnessRating={aiAnalysis.fairnessRating}
+  actionItems={aiAnalysis.actionItems}
 />
 
 <TimelineCard urgency={aiAnalysis.urgency} />

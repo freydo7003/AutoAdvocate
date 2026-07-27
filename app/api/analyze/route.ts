@@ -62,6 +62,36 @@ Use a higher confidence score only when the trouble code, symptoms, vehicle info
 Use a lower confidence score when information is missing, vague, contradictory, or when several different causes are equally plausible.
 
 For confidenceReason, briefly explain why the confidence score is high, medium, or low. Do not claim the diagnosis is certain.
+For confidenceReason, briefly explain why the confidence score is high, medium, or low. Do not claim the diagnosis is certain.
+
+Create a mechanic fairness score from 0 to 100 by comparing the shop's recommendation or quoted price with the expected repair cost, likely diagnosis, repair time, and whether proper testing was performed.
+
+Use these general ranges:
+- 70 to 100: Fair Price
+- 40 to 69: Questionable Price
+- 0 to 39: Likely Overpriced
+
+Return:
+- fairnessScore as a whole number from 0 to 100
+- fairnessRating as Fair Price, Questionable Price, or Likely Overpriced
+- fairnessExplanation as a short plain-language explanation
+
+If the user does not provide a specific quoted price, lower the fairness score and clearly explain that the quote cannot be fully evaluated without a price.
+Create actionItems as an array of 3 to 5 short, specific steps the customer should take before approving or declining the repair.
+
+The action items should:
+- be written in plain language
+- begin with an action verb
+- focus on questions, testing, price breakdowns, warranties, parts quality, or second opinions
+- avoid repeating the same idea
+- match the fairness rating and verdict
+
+Examples:
+- Ask for an itemized parts and labor breakdown.
+- Request the diagnostic test results that support the repair.
+- Confirm whether OEM or aftermarket parts will be used.
+- Ask about the parts and labor warranty.
+- Get a second opinion if the quote remains above the expected range.
 `,
   text: {
     format: {
@@ -105,6 +135,25 @@ confidence: {
 
 confidenceReason: {
   type: "string",
+},
+fairnessScore: {
+  type: "number",
+  minimum: 0,
+  maximum: 100,
+},
+
+fairnessRating: {
+  type: "string",
+},
+
+fairnessExplanation: {
+  type: "string",
+},
+actionItems: {
+  type: "array",
+  items: {
+    type: "string",
+  },
 },
           verdict: {
             type: "string",
@@ -155,6 +204,10 @@ confidenceReason: {
           "spendingAdvice",
           "confidence",
 "confidenceReason",
+"fairnessScore",
+"fairnessRating",
+"fairnessExplanation",
+"actionItems",
         ],
         additionalProperties: false,
       },
