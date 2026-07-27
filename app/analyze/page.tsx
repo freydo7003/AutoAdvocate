@@ -46,6 +46,7 @@ export default function AnalyzeRepairPage() {
 const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisResult | null>(null);
 const [isLoading, setIsLoading] = useState(false);
 const [estimateFile, setEstimateFile] = useState<File | null>(null);
+const [extractedEstimateText, setExtractedEstimateText] = useState("");
 function getVerdictStyle(severity: AIAnalysisResult["severity"]) {
   if (severity === "high") {
     return {
@@ -71,7 +72,35 @@ function getVerdictStyle(severity: AIAnalysisResult["severity"]) {
     padding: "16px",
     borderRadius: "8px",
   };
+
 }
+async function testEstimateUpload(fileToUpload?: File) {
+ const file = fileToUpload ?? estimateFile;
+
+if (!file) {
+  alert("Please choose a repair estimate first.");
+  return;
+}
+
+  const formData = new FormData();
+  formData.append("estimate", file);
+
+  const response = await fetch("/api/analyze/upload-test", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    alert(data.error ?? "The upload failed.");
+    return;
+  }
+setExtractedEstimateText(data.extractedText ?? "");
+
+}
+
+
 async function analyzeRepair(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 setIsLoading(true);
@@ -90,6 +119,13 @@ Vehicle: ${vehicle}
 Code: ${code}
 Symptoms: ${symptoms}
 Shop Recommendation: ${shopRecommendation}
+
+${
+  extractedEstimateText
+    ? `Repair Estimate:
+${extractedEstimateText}`
+    : ""
+}
       `,
     }),
   });
@@ -282,21 +318,43 @@ if (
     📄 Upload Repair Estimate (Optional)
   </label>
 
-  <input
-    id="estimateFile"
-    type="file"
-    accept=".pdf,.png,.jpg,.jpeg"
-    onChange={(event) => {
-      const selectedFile = event.target.files?.[0] ?? null;
-      setEstimateFile(selectedFile);
-    }}
-  />
+ <input
+  id="estimateFile"
+  type="file"
+  accept=".pdf,.png,.jpg,.jpeg"
+  onChange={(event) => {
+    const selectedFile = event.target.files?.[0] ?? null;
+
+    setEstimateFile(selectedFile);
+    setExtractedEstimateText("");
+
+    if (selectedFile) {
+      setTimeout(() => {
+        testEstimateUpload(selectedFile);
+      }, 0);
+    }
+  }}
+/>
 
   {estimateFile && (
     <p className="estimate-file-name">
       Selected file: <strong>{estimateFile.name}</strong>
     </p>
   )}
+  {extractedEstimateText && (
+  <div className="estimate-preview">
+    <label>Extracted Estimate Text</label>
+
+    <textarea
+      rows={10}
+      value={extractedEstimateText}
+      onChange={(event) =>
+        setExtractedEstimateText(event.target.value)
+      }
+    />
+  </div>
+)}
+  
 </div>
 
 <button className="btn" type="submit">
@@ -375,7 +433,10 @@ if (
   actionItems={aiAnalysis.actionItems}
 />
 
-<TimelineCard urgency={aiAnalysis.urgency} />
+<TimelineCard
+  urgency={aiAnalysis.urgency}
+  fairnessRating={aiAnalysis.fairnessRating}
+/>
 <ReportCard title="What's Happening" icon="🚗">
   <p>{aiAnalysis.summary}</p>
 </ReportCard>
@@ -417,42 +478,7 @@ if (
 </ReportCard>
   </section>
 )}
-      {result && (
-        <section className="card">
-          <p className="eyebrow">AutoAdvocate Review</p>
-          <h2>{result.heading}</h2>
-          <div className="card">
-  <h3>{result.verdict}</h3>
-  <p>
-    This repair might be correct, but the shop should show clear test results
-    before replacing the part.
-  </p>
-</div>
-          <div className="card">
-  <h3>AutoAdvocate's Opinion</h3>
-  <p>{result.explanation}</p>
-</div>
-
-          <h3>Questions to ask the repair shop</h3>
-          <ul>
-            {result.questions.map((question) => (
-              <li key={question}>{question}</li>
-            ))}
-          </ul>
-
-          <h3>Reasonable next checks</h3>
-          <ul>
-            {result.nextChecks.map((check) => (
-              <li key={check}>{check}</li>
-            ))}
-          </ul>
-
-          <p className="muted">
-            Educational guidance only. AutoAdvocate does not replace an
-            in-person inspection by a qualified automotive professional.
-          </p>
-        </section>
-      )}
+      
     </main>
   );
 }

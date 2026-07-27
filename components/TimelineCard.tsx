@@ -1,9 +1,11 @@
 type TimelineCardProps = {
   urgency: "immediate" | "soon" | "routine";
+  fairnessRating: string;
 };
 
 export default function TimelineCard({
   urgency,
+  fairnessRating,
 }: TimelineCardProps) {
   const timelines = {
     immediate: {
@@ -28,7 +30,22 @@ export default function TimelineCard({
     },
   };
 
-  const currentTimeline = timelines[urgency];
+ const currentTimeline =
+  fairnessRating === "Likely Overpriced"
+    ? {
+        label: "Confirm Diagnosis First",
+        message:
+          "Verify the diagnosis and compare quotes before authorizing the repair.",
+        icon: "🛑",
+      }
+    : fairnessRating === "Questionable Price"
+    ? {
+        label: "Get More Information",
+        message:
+          "Request test results and an itemized estimate before deciding.",
+        icon: "🟡",
+      }
+    : timelines[urgency];
 
   return (
     <div

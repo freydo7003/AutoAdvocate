@@ -559,3 +559,32 @@ footer { text-align: center; color: var(--muted); padding: 30px 20px; }
   color: #334155;
   font-size: 0.95rem;
 }
+.estimate-preview {
+  margin-top: 18px;
+}
+
+.estimate-preview label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.estimate-preview textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.estimate-preview textarea:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-color: #2563eb;
+}
