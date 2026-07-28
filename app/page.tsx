@@ -22,7 +22,33 @@ export default function Home() {
         </div>
       </section>
 
-      
+   <section className="shell" style={{ marginTop: "60px", marginBottom: "40px" }}>
+  <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+    Watch AutoAdvocate in Action
+  </h2>
+
+ <div
+  style={{
+    maxWidth: "800px",
+    margin: "0 auto",
+    aspectRatio: "16 / 9",
+    borderRadius: "12px",
+    overflow: "hidden",
+  }}
+>
+  <iframe
+    src="https://www.youtube.com/embed/jKLgndidI-U"
+    title="AutoAdvocate Demo"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+    style={{
+      width: "100%",
+      height: "100%",
+      border: "none",
+    }}
+  />
+</div> 
+</section>   
     <section className="shell" style={{ marginTop: "80px", marginBottom: "80px" }}>
   <h2 style={{ textAlign: "center", marginBottom: "12px" }}>
     How AutoAdvocate Works
