@@ -625,3 +625,24 @@ footer { text-align: center; color: var(--muted); padding: 30px 20px; }
   font-size: 0.9rem;
   margin-top: 16px;
 }
+.analyzing-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.analyzing-spinner {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: 4px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: analyzing-spin 0.9s linear infinite;
+}
+
+@keyframes analyzing-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

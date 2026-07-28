@@ -283,7 +283,7 @@ if (
           </label>
 
           <label>
-            Trouble code
+            OBD-II Trouble Code (Optional)
             <input
               value={code}
               onChange={(event) => setCode(event.target.value)}
@@ -363,9 +363,16 @@ if (
         </form>
       </section>
 {isLoading && (
-  <div className="card">
-    <h2>AutoAdvocate AI Analysis</h2>
-    <p>Analyzing your repair information...</p>
+  <div className="card analyzing-card">
+    <div className="analyzing-spinner" />
+
+    <div>
+      <h2>AutoAdvocate AI Analysis</h2>
+      <p>Analyzing your repair information...</p>
+      <p className="muted">
+        This may take several seconds. Please keep this page open.
+      </p>
+    </div>
   </div>
 )}
 
