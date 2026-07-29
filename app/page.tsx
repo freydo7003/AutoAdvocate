@@ -203,11 +203,7 @@ export default function Home() {
             <p className="muted">Learn what should be proven before you approve a recommended repair.</p>
             <Link className="btn" href="/estimate">Review repair</Link>
           </div>
-          <div className="card">
-            <h2>Save your vehicle</h2>
-            <p className="muted">Create a vehicle profile so future guidance can become model-specific.</p>
-            <Link className="btn" href="/vehicle">Add vehicle</Link>
-          </div>
+          
           <div className="card">
   <h2>Analyze My Repair</h2>
   <p className="muted">
