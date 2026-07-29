@@ -140,13 +140,13 @@ urgency: {
 estimatedCost: {
   type: "string",
   description:
-    "Return EXACTLY three semicolon-separated cost estimates in this format: 'Diagnosis: $100-$200; Common repair: $250-$600; Major repair: $900-$1800'. Do not use bullets, line breaks, or paragraphs. The UI will automatically convert the semicolons into bullet points.",
+    "Return exactly three semicolon-separated cost estimates. Make every item specific to this vehicle, symptoms, trouble codes, and recommended repair. Name the actual diagnostic test or repair instead of using generic labels such as 'Common repair' or 'Major repair.' Include realistic US-dollar ranges for parts and labor. Example format only: 'Fuel pressure testing: $120-$250; PCV valve or intake leak repair: $150-$500; Fuel injectors and high-pressure pump if confirmed: $1,800-$3,200'. Do not use bullets, line breaks, or paragraphs.",
 },
 
 repairTime: {
   type: "string",
   description:
-    "Return EXACTLY three semicolon-separated repair times in this format: 'Diagnosis: 1 hour; Common repair: 2-3 hours; Major repair: 1-2 days'. Do not use bullets, line breaks, or paragraphs. The UI will automatically convert the semicolons into bullet points.",
+    "Return exactly three semicolon-separated time estimates. Make every item specific to the actual diagnostic test or repair being discussed. Do not use generic labels such as 'Common repair' or 'Major repair.' Example format only: 'Fuel pressure and leak testing: 1-2 hours; PCV valve or intake leak repair: 1-3 hours; Fuel injector and high-pressure pump replacement if confirmed: 1-2 days'. Do not use bullets, line breaks, or paragraphs.",
 },
 
 safeToDrive: {
