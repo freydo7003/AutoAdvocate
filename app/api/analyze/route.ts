@@ -140,13 +140,13 @@ urgency: {
 estimatedCost: {
   type: "string",
   description:
-    "A realistic estimated repair cost range in US dollars, such as $100-$350. Include parts and labor when possible.",
+    "Return EXACTLY three semicolon-separated cost estimates in this format: 'Diagnosis: $100-$200; Common repair: $250-$600; Major repair: $900-$1800'. Do not use bullets, line breaks, or paragraphs. The UI will automatically convert the semicolons into bullet points.",
 },
 
 repairTime: {
   type: "string",
   description:
-    "A realistic estimated shop repair time, such as 1-2 hours or 1-2 days.",
+    "Return EXACTLY three semicolon-separated repair times in this format: 'Diagnosis: 1 hour; Common repair: 2-3 hours; Major repair: 1-2 days'. Do not use bullets, line breaks, or paragraphs. The UI will automatically convert the semicolons into bullet points.",
 },
 
 safeToDrive: {
