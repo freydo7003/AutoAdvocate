@@ -20,9 +20,54 @@ export default function Home() {
 </Link>  
           </div>
         </div>
-      </section>
+       </section>
 
-   <section className="shell" style={{ marginTop: "60px", marginBottom: "40px" }}>
+      <section
+        className="shell"
+        style={{
+          marginTop: "32px",
+          marginBottom: "20px",
+        }}
+      >
+        <div
+          className="card"
+          style={{
+            textAlign: "center",
+            border: "1px solid #f0c36a",
+            background: "#fff8e1",
+          }}
+        >
+          <div
+            style={{
+              fontWeight: 700,
+              marginBottom: "8px",
+            }}
+          >
+            🚧 AutoAdvocate Early Access — Version 1.0
+          </div>
+
+          <p
+            style={{
+              margin: "0 auto",
+              maxWidth: "760px",
+            }}
+          >
+            We&apos;re improving AutoAdvocate every week using real repair
+            estimates and user feedback. Our mission is to help drivers
+            understand repair recommendations before spending money.
+             </p>
+
+          <a
+            className="btn secondary"
+           href="mailto:autoadvocatehq@gmail.com?subject=AutoAdvocate%20Feedback" 
+            style={{ marginTop: "18px", display: "inline-block" }}
+          >
+            💬 Help Improve AutoAdvocate
+          </a>
+        </div>
+      </section>      
+
+   <section className="shell" style={{ marginTop: "40px", marginBottom: "40px" }}>
   <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
     Watch AutoAdvocate in Action
   </h2>
