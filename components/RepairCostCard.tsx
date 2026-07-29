@@ -16,12 +16,24 @@ export default function RepairCostCard({
       <div className="repair-cost-grid">
         <div className="repair-cost-item">
           <span className="repair-cost-label">Typical Cost Range</span>
-          <strong className="repair-cost-value">{estimatedCost}</strong>
+         <div className="repair-cost-value">
+  <ul style={{ margin: 0, paddingLeft: "20px" }}>
+    {estimatedCost.split(";").map((item, index) => (
+      <li key={index}>{item.trim()}</li>
+    ))}
+  </ul>
+</div> 
         </div>
 
         <div className="repair-cost-item">
           <span className="repair-cost-label">Estimated Shop Time</span>
-          <strong className="repair-cost-value">{repairTime}</strong>
+         <div className="repair-cost-value">
+  <ul style={{ margin: 0, paddingLeft: "20px" }}>
+    {repairTime.split(";").map((item, index) => (
+      <li key={index}>{item.trim()}</li>
+    ))}
+  </ul>
+</div> 
         </div>
       </div>
 
