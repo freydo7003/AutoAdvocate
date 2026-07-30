@@ -85,7 +85,7 @@ if (!file) {
   const formData = new FormData();
   formData.append("estimate", file);
 
-  const response = await fetch("/api/upload-test", {
+ const response = await fetch("/api/analyze/upload-test", {
     method: "POST",
     body: formData,
   });
@@ -105,6 +105,9 @@ async function analyzeRepair(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 setIsLoading(true);
 setAiAnalysis(null);
+if (estimateFile) {
+  await testEstimateUpload(estimateFile);
+}
     const normalizedCode = code.trim().toUpperCase();
     const recommendation = shopRecommendation.toLowerCase();
  try {
