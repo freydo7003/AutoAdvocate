@@ -51,17 +51,17 @@ export default function SummaryCard({
   }
 />
 
-    <SummaryItem
-      icon="💰"
-      title="Estimated Repair Cost"
-      value={estimatedCost}
-    />
+<SummaryItem
+  icon="💰"
+  title="Estimated Repair Cost"
+  value={estimatedCost.split(";")[0].trim()}
+/>
 
-    <SummaryItem
-      icon="⏱️"
-      title="Estimated Shop Time"
-      value={repairTime}
-    />
+<SummaryItem
+  icon="⏱️"
+  title="Estimated Shop Time"
+  value={repairTime.split(";")[0].trim()}
+/>
 
     <SummaryItem
       icon="🚗"
