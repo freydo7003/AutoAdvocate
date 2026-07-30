@@ -14,8 +14,7 @@
     "openai": "^6.48.0",
     "pdf-parse": "^2.4.5",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "tesseract.js": "^7.0.0"
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@types/node": "^22",
