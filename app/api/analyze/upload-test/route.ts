@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createWorker } from "tesseract.js";
-import path from "path";
+
 export async function POST(request: Request) {
 console.log("1. Route started");  
   const formData = await request.formData();
@@ -17,17 +17,7 @@ console.log("3. File:", file?.name);
  const fileBuffer = Buffer.from(await file.arrayBuffer());
 console.log("4. Buffer created");
 if (file.type === "image/jpeg" || file.type === "image/png") {
- const worker = await createWorker("eng", 1, {
-  workerPath: path.join(
-    process.cwd(),
-    "node_modules",
-    "tesseract.js",
-    "src",
-    "worker-script",
-    "node",
-    "index.js"
-  ),
-}); 
+ const worker = await createWorker("eng");
 console.log("5. Worker created");
   const {
     data: { text },
