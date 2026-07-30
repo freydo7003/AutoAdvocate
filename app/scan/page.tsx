@@ -4,7 +4,46 @@ import { useState } from "react";
 
 export default function ScanEstimatePage() {
   const [fileName, setFileName] = useState("");
+  const [estimateFile, setEstimateFile] = useState<File | null>(null);
+  const [isReadingEstimate, setIsReadingEstimate] = useState(false);
+const [extractedEstimateText, setExtractedEstimateText] = useState("");
+const [uploadError, setUploadError] = useState("");
 const [analyzed, setAnalyzed] = useState(false);
+async function readEstimate() {
+  if (!estimateFile) {
+    setUploadError("Please choose a repair estimate first.");
+    return;
+  }
+
+  setIsReadingEstimate(true);
+  setUploadError("");
+  setExtractedEstimateText("");
+
+  try {
+    const formData = new FormData();
+    formData.append("estimate", estimateFile);
+
+    const response = await fetch("/api/analyze/extract-estimate", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setUploadError(data.error ?? "The estimate could not be read.");
+      return;
+    }
+
+    setExtractedEstimateText(data.extractedText ?? "");
+    setAnalyzed(true);
+  } catch (error) {
+    console.error(error);
+    setUploadError("The estimate could not be read.");
+  } finally {
+    setIsReadingEstimate(false);
+  }
+}
 const estimate = {
   verdict: "🟡 Overall Verdict: Use Caution",
   confidence: 78,
@@ -59,9 +98,10 @@ const estimate = {
           onChange={(event) => {
             const file = event.target.files?.[0];
 
-            if (file) {
-              setFileName(file.name);
-            }
+           if (file) {
+  setFileName(file.name);
+  setEstimateFile(file);
+}
           }}
         />
 
@@ -72,9 +112,10 @@ const estimate = {
             <button
   className="btn"
   type="button"
-  onClick={() => setAnalyzed(true)}
+ onClick={readEstimate}
+ disabled={isReadingEstimate}
 >
-  Analyze Estimate
+  {isReadingEstimate ? "Reading Estimate..." : "Analyze Estimate"}
 </button>
             <p className="muted">
               AutoAdvocate will analyze this estimate in a future step.
@@ -82,6 +123,14 @@ const estimate = {
           </div>
         )}
       </div>
+      {extractedEstimateText && (
+  <div className="card">
+    <h2>Extracted Estimate Text</h2>
+    <pre style={{ whiteSpace: "pre-wrap" }}>
+      {extractedEstimateText}
+    </pre>
+  </div>
+)}
  {analyzed && (
   <div className="card">
     <h2>📄 AutoAdvocate Estimate Review</h2>
