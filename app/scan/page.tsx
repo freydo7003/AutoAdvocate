@@ -8,7 +8,22 @@ export default function ScanEstimatePage() {
   const [isReadingEstimate, setIsReadingEstimate] = useState(false);
 const [extractedEstimateText, setExtractedEstimateText] = useState("");
 const [uploadError, setUploadError] = useState("");
-const [review, setReview] = useState("");
+const [review, setReview] = useState<{
+  verdict: string;
+  summary: string;
+  urgent: string[];
+  canWait: string[];
+  needsConfirmation: string[];
+  concerns: string[];
+  questions: string[];
+  costs: {
+    parts: string;
+    labor: string;
+    taxes: string;
+    fees: string;
+    total: string;
+  };
+} | null>(null);
 const [analyzed, setAnalyzed] = useState(false);
 async function readEstimate() {
   if (!estimateFile) {
@@ -113,20 +128,103 @@ setReview(reviewData.review);
 )}
  {analyzed && (
   <>
-    {review && (
-      <div className="card">
-        <h2>AI Estimate Review</h2>
+  {review && (
+  <div className="card">
+    <h2>AI Estimate Review</h2>
 
-        <div
-          style={{
-            whiteSpace: "pre-wrap",
-            lineHeight: 1.7,
-          }}
-        >
-          {review}
-        </div>
-      </div>
+    <h3>{review.verdict}</h3>
+
+    <p>{review.summary}</p>
+
+    <hr />
+
+    <h3>🚨 Urgent</h3>
+
+    {review.urgent.length > 0 ? (
+      <ul>
+        {review.urgent.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="muted">No urgent repairs identified.</p>
     )}
+
+    <h3>⏳ Can Wait</h3>
+
+    {review.canWait.length > 0 ? (
+      <ul>
+        {review.canWait.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="muted">No repairs were clearly identified as safe to delay.</p>
+    )}
+
+    <h3>🔎 Needs Confirmation</h3>
+
+    {review.needsConfirmation.length > 0 ? (
+      <ul>
+        {review.needsConfirmation.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="muted">No additional confirmation was identified.</p>
+    )}
+
+    <hr />
+
+    <h3>💰 Cost Breakdown</h3>
+
+    <p>
+      <strong>Parts:</strong> {review.costs.parts}
+    </p>
+
+    <p>
+      <strong>Labor:</strong> {review.costs.labor}
+    </p>
+
+    <p>
+      <strong>Taxes:</strong> {review.costs.taxes}
+    </p>
+
+    <p>
+      <strong>Fees:</strong> {review.costs.fees}
+    </p>
+
+    <p>
+      <strong>Total:</strong> {review.costs.total}
+    </p>
+
+    <hr />
+
+    <h3>⚠️ Concerns</h3>
+
+    {review.concerns.length > 0 ? (
+      <ul>
+        {review.concerns.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="muted">No major concerns were identified.</p>
+    )}
+
+    <h3>❓ Questions to Ask the Shop</h3>
+
+    {review.questions.length > 0 ? (
+      <ul>
+        {review.questions.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="muted">No additional questions were suggested.</p>
+    )}
+  </div>
+)}
 
  
   </>
