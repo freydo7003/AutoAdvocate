@@ -45,6 +45,8 @@ export default function AnalyzeRepairPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
 const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisResult | null>(null);
 const [isLoading, setIsLoading] = useState(false);
+const [loadingMessage, setLoadingMessage] = useState("");
+const [isReadingEstimate, setIsReadingEstimate] = useState(false);
 const [estimateFile, setEstimateFile] = useState<File | null>(null);
 const [extractedEstimateText, setExtractedEstimateText] = useState("");
 function getVerdictStyle(severity: AIAnalysisResult["severity"]) {
@@ -81,11 +83,12 @@ if (!file) {
   alert("Please choose a repair estimate first.");
   return;
 }
-
+setIsReadingEstimate(true);
   const formData = new FormData();
   formData.append("estimate", file);
 
-const response = await fetch("/api/analyze/extract-estimate", {
+try {
+  const response = await fetch("/api/analyze/extract-estimate", {
     method: "POST",
     body: formData,
   });
@@ -96,7 +99,14 @@ const response = await fetch("/api/analyze/extract-estimate", {
     alert(data.error ?? "The upload failed.");
     return;
   }
-setExtractedEstimateText(data.extractedText ?? "");
+
+  setExtractedEstimateText(data.extractedText ?? "");
+} catch (error) {
+  console.error(error);
+  alert("The repair estimate could not be read.");
+} finally {
+  setIsReadingEstimate(false);
+}
 
 }
 
@@ -106,11 +116,13 @@ async function analyzeRepair(event: FormEvent<HTMLFormElement>) {
 setIsLoading(true);
 setAiAnalysis(null);
 if (estimateFile) {
+  setLoadingMessage("Reading your repair estimate...");
   await testEstimateUpload(estimateFile);
 }
     const normalizedCode = code.trim().toUpperCase();
     const recommendation = shopRecommendation.toLowerCase();
  try {
+ setLoadingMessage("Analyzing your repair..."); 
   const response = await fetch("/api/analyze", {
     method: "POST",
     headers: {
@@ -141,6 +153,7 @@ console.log(data.analysis);
   setAiAnalysis(null);
 } finally {
   setIsLoading(false);
+  setLoadingMessage("");
 }   
 if (
   normalizedCode === "P0302" &&
@@ -344,6 +357,19 @@ if (
       Selected file: <strong>{estimateFile.name}</strong>
     </p>
   )}
+  {isReadingEstimate && (
+  <div className="card analyzing-card">
+    <div className="analyzing-spinner" />
+
+    <h2>Reading Repair Estimate</h2>
+
+    <p>Extracting text from your repair estimate...</p>
+
+    <p className="muted">
+      This usually takes 5–10 seconds.
+    </p>
+  </div>
+)}
   {extractedEstimateText && (
   <div className="estimate-preview">
     <label>Extracted Estimate Text</label>
