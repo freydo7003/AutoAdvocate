@@ -140,13 +140,13 @@ urgency: {
 estimatedCost: {
   type: "string",
   description:
-    "Return exactly three semicolon-separated cost estimates. Make every item specific to this vehicle, symptoms, trouble codes, and recommended repair. Name the actual diagnostic test or repair instead of using generic labels such as 'Common repair' or 'Major repair.' Include realistic US-dollar ranges for parts and labor. Example format only: 'Fuel pressure testing: $120-$250; PCV valve or intake leak repair: $150-$500; Fuel injectors and high-pressure pump if confirmed: $1,800-$3,200'. Do not use bullets, line breaks, or paragraphs.",
+    "Return exactly three semicolon-separated cost estimates. Each item must use a short, specific label of 5-8 words maximum followed by a realistic US-dollar range. Name the actual diagnostic test or repair for this vehicle. Do not use generic labels such as 'Common repair' or 'Major repair.' Do not include explanations, vehicle names, engine details, test procedures, or reasoning in this field. Example: 'Fuel pressure testing: $120-$250; Intake/PCV leak repair: $150-$600; Injectors + HPFP if confirmed: $1,800-$3,200'. Do not use bullets, line breaks, or paragraphs.",
 },
 
 repairTime: {
   type: "string",
   description:
-    "Return exactly three semicolon-separated time estimates. Make every item specific to the actual diagnostic test or repair being discussed. Do not use generic labels such as 'Common repair' or 'Major repair.' Example format only: 'Fuel pressure and leak testing: 1-2 hours; PCV valve or intake leak repair: 1-3 hours; Fuel injector and high-pressure pump replacement if confirmed: 1-2 days'. Do not use bullets, line breaks, or paragraphs.",
+    "Return exactly three semicolon-separated time estimates. Each item must use a short, specific label of 5-8 words maximum followed by a realistic time estimate. Name the actual diagnostic test or repair for this vehicle. Do not use generic labels such as 'Common repair' or 'Major repair.' Do not include explanations, vehicle names, engine details, test procedures, or reasoning in this field. Example: 'Fuel pressure testing: 1-2 hours; Intake/PCV leak repair: 1-3 hours; Injectors + HPFP replacement: 1-2 days'. Do not use bullets, line breaks, or paragraphs.",
 },
 
 safeToDrive: {
