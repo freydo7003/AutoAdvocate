@@ -85,7 +85,7 @@ if (!file) {
   const formData = new FormData();
   formData.append("estimate", file);
 
-  const response = await fetch("/api/analyze/upload-test", {
+  const response = await fetch("/api/upload-test", {
     method: "POST",
     body: formData,
   });
