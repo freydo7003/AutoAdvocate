@@ -4,8 +4,9 @@ import { Analytics } from "@vercel/analytics/next";
 import Nav from "../components/Nav";
 
 export const metadata: Metadata = {
-  title: "AutoAdvocate",
-  description: "Know before you pay for car repairs."
+  title: "AutoAdvocate | AI Repair Estimate Analyzer & Car Repair Second Opinion",
+  description:
+    "Upload a repair estimate, trouble code, or mechanic recommendation and get an AI-powered explanation, repair cost guidance, fairness insights, and questions to ask before approving car repairs.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
