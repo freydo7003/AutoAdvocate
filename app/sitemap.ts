@@ -16,6 +16,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   changeFrequency: "weekly",
   priority: 0.9,
 },
+{
+  url: `${baseUrl}/how-to-read-car-repair-estimate`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
+{
+  url: `${baseUrl}/should-i-get-second-opinion-car-repair`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
     {
       url: `${baseUrl}/analyze`,
       lastModified: new Date(),

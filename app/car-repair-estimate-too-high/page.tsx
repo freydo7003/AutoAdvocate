@@ -77,6 +77,21 @@ export default function CarRepairEstimateTooHighPage() {
   approving the work.
 </p> 
         </Link>
+     <h2>Related Car Repair Guides</h2>
+
+<ul>
+  <li>
+    <Link href="/how-to-read-car-repair-estimate">
+      How to Read a Car Repair Estimate
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/should-i-get-second-opinion-car-repair">
+      Should I Get a Second Opinion on a Car Repair?
+    </Link>
+  </li>
+</ul>   
       </div>
     </main>
   );
