@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+  url: `${baseUrl}/car-repair-estimate-too-high`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
+    {
       url: `${baseUrl}/analyze`,
       lastModified: new Date(),
       changeFrequency: "weekly",
