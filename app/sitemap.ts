@@ -28,6 +28,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   changeFrequency: "weekly",
   priority: 0.9,
 },
+{
+  url: `${baseUrl}/should-i-approve-this-car-repair`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
+{
+  url: `${baseUrl}/is-it-safe-to-drive-with-check-engine-light`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
     {
       url: `${baseUrl}/analyze`,
       lastModified: new Date(),
