@@ -64,6 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   changeFrequency: "weekly",
   priority: 0.9,
 },
+{
+  url: `${baseUrl}/how-long-can-you-drive-with-check-engine-light-on`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
     {
       url: `${baseUrl}/analyze`,
       lastModified: new Date(),
