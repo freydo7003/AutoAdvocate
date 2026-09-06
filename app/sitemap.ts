@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   changeFrequency: "weekly",
   priority: 0.9,
 },
+{
+  url: `${baseUrl}/can-i-drive-with-abs-light-on`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+},
     {
       url: `${baseUrl}/analyze`,
       lastModified: new Date(),
