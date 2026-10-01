@@ -21,7 +21,7 @@ export default function DiagnosisPage() {
   return <main className={styles.page}>
     <div className={styles.hero}>
       <p className={styles.eyebrow}>AutoAdvocate Code Lookup</p>
-      <h1>Understand your trouble code</h1>
+      <h1>Car Engine Code Lookup & OBD-II Trouble Code Guide</h1>
       <p>Enter a five-character OBD-II code such as <strong>P0302</strong>. A code identifies the system that noticed a problem; it does not prove which part should be replaced.</p>
     </div>
 
