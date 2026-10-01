@@ -19,7 +19,7 @@ export default function CanIDriveWithOilPressureLightPage() {
           damage.
         </p>
 
-        <h2>Should You Keep Driving?</h2>
+        <h2>What Should You Do If the Oil Pressure Light Comes On While Driving?</h2>
 
         <p>
           If the oil pressure light stays on while the engine is running, get
