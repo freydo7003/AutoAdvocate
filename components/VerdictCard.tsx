@@ -37,20 +37,17 @@ export default function VerdictCard({
     },
   };
 
- const severityKey = severity.toLowerCase() as keyof typeof styles;
- const currentStyle =
-  fairnessRating === "Likely Overpriced"
-    ? styles.high
-    : fairnessRating === "Questionable Price"
-    ? styles.medium
-    : styles.low;
+const severityKey = severity.toLowerCase() as keyof typeof styles;
+
+const currentStyle = styles[severityKey] ?? styles.medium;
+
 let actionTitle = "Ask More Questions";
 let actionIcon = "🟡";
 
-if (fairnessRating === "Likely Overpriced") {
+if (severityKey === "high") {
   actionTitle = "Do Not Approve Yet";
   actionIcon = "🚫";
-} else if (fairnessRating === "Fair Price") {
+} else if (severityKey === "low") {
   actionTitle = "Reasonable to Approve";
   actionIcon = "✅";
 }
