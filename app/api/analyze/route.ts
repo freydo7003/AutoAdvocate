@@ -71,6 +71,16 @@ Evaluate how quickly the vehicle needs attention separately using urgency.
 
 A repair can have high severity because the recommendation is unsupported while the vehicle has low immediate driving risk.
 
+The repair approval recommendation MUST be consistent with severity.
+
+If severity is high, do NOT recommend approving the repair. State that the repair should not be approved until diagnostic evidence supports it.
+
+If severity is medium, recommend confirming the diagnosis before approving the repair.
+
+If severity is low, the repair may be reasonable to approve if the available evidence supports it.
+
+A fair price does NOT mean the repair itself is justified. Price fairness must remain independent of repair approval risk.
+
 Likewise, a well-supported repair can have low severity while requiring immediate attention because of a serious safety concern.
 
 Never increase severity solely because a vehicle is unsafe to drive or needs urgent repairs.
