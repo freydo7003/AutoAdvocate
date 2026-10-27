@@ -12,14 +12,17 @@ export default function FairnessScoreCard({
   explanation,
 }: FairnessScoreCardProps) {
   const safeScore = Math.max(0, Math.min(100, score));
-
+const hasPrice = rating !== "Price Not Provided";
   let toneClass = "fairness-score-good";
+ const isUnrated = rating === "Price Not Provided"; 
 
-  if (safeScore < 40) {
-    toneClass = "fairness-score-bad";
-  } else if (safeScore < 70) {
-    toneClass = "fairness-score-warning";
-  }
+if (isUnrated) {
+  toneClass = "fairness-score-neutral";
+} else if (safeScore < 40) {
+  toneClass = "fairness-score-bad";
+} else if (safeScore < 70) {
+  toneClass = "fairness-score-warning";
+}
 
   return (
     <ReportCard title="Mechanic Fairness Score" icon="🛡️">
@@ -29,15 +32,19 @@ export default function FairnessScoreCard({
           <strong className="fairness-score-rating">{rating}</strong>
         </div>
 
-        <div className="fairness-score-number">{safeScore}/100</div>
+        {hasPrice && (
+  <div className="fairness-score-number">{safeScore}/100</div>
+)}
       </div>
 
-      <div className="fairness-score-track">
-        <div
-          className={`fairness-score-fill ${toneClass}`}
-          style={{ width: `${safeScore}%` }}
-        />
-      </div>
+      {hasPrice && (
+  <div className="fairness-score-track">
+    <div
+      className={`fairness-score-fill ${toneClass}`}
+      style={{ width: `${safeScore}%` }}
+    />
+  </div>
+)}
 
       <p className="fairness-score-explanation">{explanation}</p>
     </ReportCard>

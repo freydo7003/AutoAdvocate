@@ -55,13 +55,25 @@ Distinguish between:
 - and a repair that appears unsupported by the available evidence.
 
 Keep likely causes realistic and prioritized. Do not provide a long list of rare possibilities merely to appear thorough.
-Choose severity using these rules:
+Choose severity based ONLY on the risk of approving the recommended repair without sufficient diagnostic evidence.
 
-high = the shop recommendation appears unsupported, potentially unsafe, or could cause major unnecessary expense
+high = the recommended repair is poorly supported by the available evidence and approving it could result in substantial unnecessary expense
 
-medium = the diagnosis is uncertain and more testing is needed before approving the repair
+medium = the repair may be reasonable, but important diagnostic information is missing and confirmation is needed before approval
 
-low = the recommendation reasonably matches the trouble code, symptoms, and available evidence
+low = the recommended repair is reasonably supported by the symptoms, trouble codes, and available diagnostic evidence
+
+Severity measures the financial and diagnostic risk of approving the repair. It does NOT measure driving safety or repair urgency.
+
+Evaluate driving safety separately using safeToDrive.
+
+Evaluate how quickly the vehicle needs attention separately using urgency.
+
+A repair can have high severity because the recommendation is unsupported while the vehicle has low immediate driving risk.
+
+Likewise, a well-supported repair can have low severity while requiring immediate attention because of a serious safety concern.
+
+Never increase severity solely because a vehicle is unsafe to drive or needs urgent repairs.
 Choose urgency using these rules:
 
 immediate = delaying the repair could create a serious safety risk, major engine damage, transmission damage, or leave the driver stranded
@@ -72,7 +84,19 @@ routine = the repair can normally wait until regular maintenance or a convenient
 Estimate the likely repair cost as a realistic range in US dollars. Include both parts and labor when possible. Use a simple format such as $100-$350.
 
 Estimate the typical shop repair time using a simple format such as 1-2 hours, 3-5 hours, or 1-2 days.
+Evaluate driving safety independently from severity and the quoted repair price.
 
+Base driving guidance on the reported symptoms, warning lights, vehicle behavior, and potential consequences of continued driving.
+
+Never assume a vehicle is safe simply because the repair is routine or the recommended repair is unsupported.
+
+When critical safety information is missing, avoid giving unconditional reassurance.
+
+Use "limited" when short, necessary trips may be reasonable but the available information does not support unrestricted driving.
+
+Use "no" when the reported condition suggests a serious safety hazard or a significant risk of additional vehicle damage.
+
+In the summary, include a brief driving safety explanation based on the reported symptoms. Clearly identify warning signs that would change the driving recommendation, such as a flashing check engine light, overheating, severe power loss, unusual engine noises, or an oil pressure warning. Explain that driving guidance is based only on the information provided and is not a physical vehicle inspection.
 For safeToDrive, return exactly one of these values:
 
 yes
@@ -92,7 +116,7 @@ Use a lower confidence score when information is missing, vague, contradictory, 
 For confidenceReason, briefly explain why the confidence score is high, medium, or low. Do not claim the diagnosis is certain.
 For confidenceReason, briefly explain why the confidence score is high, medium, or low. Do not claim the diagnosis is certain.
 
-Create a mechanic fairness score from 0 to 100 by comparing the shop's recommendation or quoted price with the expected repair cost, likely diagnosis, repair time, and whether proper testing was performed.
+Evaluate price fairness independently from diagnostic evidence. Compare the shop's quoted price with the typical cost of performing the specific quoted repair, including parts, labor, and reasonable regional variation. Do not lower the price fairness score simply because the diagnosis has not been confirmed. Evaluate insufficient diagnostic evidence separately using severity.
 
 Use these general ranges:
 - 70 to 100: Fair Price
@@ -104,7 +128,7 @@ Return:
 - fairnessRating as Fair Price, Questionable Price, or Likely Overpriced
 - fairnessExplanation as a short plain-language explanation
 
-If the user does not provide a specific quoted price, lower the fairness score and clearly explain that the quote cannot be fully evaluated without a price.
+If the customer does not provide a quoted price, set fairnessRating to "Price Not Provided" and fairnessScore to 0 as a placeholder only. In fairnessExplanation, clearly state that price fairness cannot be evaluated without a quote. Do not interpret the placeholder score as evidence of overpricing.
 Create actionItems as an array of 3 to 5 short, specific steps the customer should take before approving or declining the repair.
 
 The action items should:
@@ -140,7 +164,8 @@ urgency: {
 estimatedCost: {
   type: "string",
   description:
-    "Return exactly three semicolon-separated cost estimates. Each item must use a short, specific label of 5-8 words maximum followed by a realistic US-dollar range. Name the actual diagnostic test or repair for this vehicle. Do not use generic labels such as 'Common repair' or 'Major repair.' Do not include explanations, vehicle names, engine details, test procedures, or reasoning in this field. Example: 'Fuel pressure testing: $120-$250; Intake/PCV leak repair: $150-$600; Injectors + HPFP if confirmed: $1,800-$3,200'. Do not use bullets, line breaks, or paragraphs.",
+    
+  "Return exactly three semicolon-separated cost estimates. Each item must use a short, specific label followed by a realistic US-dollar range. The FIRST item must be the initial diagnostic testing cost. The SECOND and THIRD items must be two possible repair costs. Name the actual diagnostic test or repair for this vehicle. Do not use generic labels such as 'Common repair' or 'Major repair.' Do not include explanations or reasoning in this field. Example: 'Fuel pressure testing: $120-$250; Intake/PCV leak repair: $150-$600; Injectors + HPFP if confirmed: $1,800-$3,200'. Do not use bullets, line breaks, or paragraphs.",
 },
 
 repairTime: {
@@ -172,6 +197,12 @@ fairnessScore: {
 
 fairnessRating: {
   type: "string",
+  enum: [
+    "Fair Price",
+    "Questionable Price",
+    "Likely Overpriced",
+    "Price Not Provided",
+  ],
 },
 
 fairnessExplanation: {

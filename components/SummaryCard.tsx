@@ -22,10 +22,10 @@ export default function SummaryCard({
   };
 
   const drivingLabels = {
-    yes: "Yes",
-    no: "No",
-    limited: "Limited Driving Only",
-  };
+  yes: "Generally OK Based on Symptoms",
+  limited: "Limit Driving Until Inspected",
+  no: "Do Not Drive",
+};
 
   const urgencyLabels = {
     immediate: "Repair Immediately",
@@ -35,12 +35,12 @@ export default function SummaryCard({
 
   return (
     <div className="report-card">
-  <h2 style={{ marginTop: 0 }}>Vehicle Risk Summary</h2>
+ <h2 style={{ marginTop: 0 }}>Repair Analysis Summary</h2> 
 
 <div className="summary-grid">
    <SummaryItem
   icon={severity === "high" ? "🔴" : severity === "medium" ? "🟡" : "🟢"}
-  title="Overall Risk"
+  title="Repair Approval Risk"
   value={riskLabels[severity]}
   tone={
     severity === "high"
@@ -53,8 +53,14 @@ export default function SummaryCard({
 
 <SummaryItem
   icon="💰"
-  title="Estimated Repair Cost"
+  title="Initial Diagnostic Cost"
   value={estimatedCost.split(";")[0].trim()}
+/>
+
+<SummaryItem
+  icon="🔧"
+  title="Alternative Repair Possibility"
+  value={estimatedCost.split(";")[1]?.trim() || "Not available"}
 />
 
 <SummaryItem
@@ -65,7 +71,7 @@ export default function SummaryCard({
 
     <SummaryItem
       icon="🚗"
-      title="Safe to Drive"
+      title="Driving Guidance"
       value={drivingLabels[safeToDrive]}
     />
 

@@ -318,7 +318,7 @@ if (
           </label>
 
           <label>
-            What did the repair shop recommend?
+           What did the repair shop recommend? (Optional) 
             <textarea
               value={shopRecommendation}
               onChange={(event) =>

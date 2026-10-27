@@ -128,7 +128,7 @@ footer { text-align: center; color: var(--muted); padding: 30px 20px; }
 }
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -645,4 +645,8 @@ footer { text-align: center; color: var(--muted); padding: 30px 20px; }
   to {
     transform: rotate(360deg);
   }
+}
+.fairness-score-neutral {
+  background-color: #f1f5f9;
+  color: #475569;
 }
