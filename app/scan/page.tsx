@@ -81,11 +81,43 @@ setReview(reviewData.review);
   return (
     <main className="container">
       <div className="card">
-        <h1>Scan My Repair Estimate</h1>
+        
+<h1>Scan My Repair Estimate</h1>
 
-        <p className="muted">
-          Upload a photo or PDF of your repair estimate.
-        </p>
+<p>
+  <strong>Not sure if your mechanic's estimate is reasonable?</strong>
+  {" "}Upload your repair estimate and let AutoAdvocate
+  help you understand what you're being charged for.
+</p>
+
+<p>
+  Our AI-powered review examines the listed repairs,
+  parts and labor charges, potential concerns, and
+  questions you should ask before approving the work.
+</p>
+
+<p className="muted">
+  Upload a JPG, PNG, or PDF repair estimate.
+  For your privacy, remove unnecessary personal
+  information before uploading.
+</p>
+
+
+<div
+  style={{
+    backgroundColor: "#f8fafc",
+    border: "2px dashed #94a3b8",
+    borderRadius: "12px",
+    padding: "24px",
+    marginTop: "20px",
+    marginBottom: "16px",
+  }}
+>
+  <h2>Upload Your Repair Estimate</h2>
+  <p className="muted">
+    Choose a photo, screenshot, or PDF of the estimate
+    your repair shop provided.
+  </p>
 
         <input
           type="file"
@@ -93,12 +125,43 @@ setReview(reviewData.review);
           onChange={(event) => {
             const file = event.target.files?.[0];
 
-           if (file) {
+          
+
+if (file) {
+  setExtractedEstimateText("");
+  setReview(null);
+  setAnalyzed(false);
+  setUploadError("");
+
+  if (file.size > 5 * 1024 * 1024) {
+    setFileName("");
+    setEstimateFile(null);
+    setUploadError(
+      "This file is too large. Please upload an estimate smaller than 5 MB."
+    );
+    return;
+  }
+
   setFileName(file.name);
   setEstimateFile(file);
 }
+
+
           }}
         />
+</div>
+{uploadError && (
+  <p
+    role="alert"
+    style={{
+      color: "#b91c1c",
+      fontWeight: 600,
+      marginTop: "12px",
+    }}
+  >
+    {uploadError}
+  </p>
+)}
 
         {fileName && (
           <div className="card">
@@ -132,9 +195,26 @@ setReview(reviewData.review);
   <div className="card">
     <h2>AI Estimate Review</h2>
 
-    <h3>{review.verdict}</h3>
+   
+<div
+  style={{
+    backgroundColor: "#fff7ed",
+    border: "1px solid #fdba74",
+    borderLeft: "5px solid #ea580c",
+    borderRadius: "10px",
+    padding: "20px",
+    marginBottom: "24px",
+  }}
+>
+  <h3 style={{ marginTop: 0, color: "#9a3412" }}>
+    {review.verdict}
+  </h3>
 
-    <p>{review.summary}</p>
+  <p style={{ marginBottom: 0 }}>
+    {review.summary}
+  </p>
+</div>
+ 
 
     <hr />
 
@@ -194,9 +274,27 @@ setReview(reviewData.review);
       <strong>Fees:</strong> {review.costs.fees}
     </p>
 
-    <p>
-      <strong>Total:</strong> {review.costs.total}
-    </p>
+   
+<div
+  style={{
+    backgroundColor: "#f1f5f9",
+    borderRadius: "10px",
+    padding: "16px",
+    marginTop: "12px",
+    marginBottom: "20px",
+  }}
+>
+  <p
+    style={{
+      fontSize: "20px",
+      fontWeight: 700,
+      margin: 0,
+    }}
+  >
+    Total Estimated Cost: {review.costs.total}
+  </p>
+</div>
+
 
     <hr />
 
@@ -212,7 +310,24 @@ setReview(reviewData.review);
       <p className="muted">No major concerns were identified.</p>
     )}
 
-    <h3>❓ Questions to Ask the Shop</h3>
+    
+<div
+  style={{
+    backgroundColor: "#eff6ff",
+    borderLeft: "5px solid #2563eb",
+    borderRadius: "10px",
+    padding: "16px 20px",
+    marginTop: "20px",
+  }}
+>
+  <h3 style={{ marginTop: 0 }}>
+    ❓ Questions to Ask Your Mechanic
+  </h3>
+  <p className="muted">
+    Use these questions when speaking with your repair shop
+    before approving the recommended work.
+  </p>
+
 
     {review.questions.length > 0 ? (
       <ul>
@@ -224,8 +339,8 @@ setReview(reviewData.review);
       <p className="muted">No additional questions were suggested.</p>
     )}
   </div>
+</div>
 )}
-
  
   </>
 )}
