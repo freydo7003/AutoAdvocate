@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function ScanEstimatePage() {
   const [fileName, setFileName] = useState("");
+  const [questionsCopied, setQuestionsCopied] = useState(false);
   const [estimateFile, setEstimateFile] = useState<File | null>(null);
   const [isReadingEstimate, setIsReadingEstimate] = useState(false);
 const [extractedEstimateText, setExtractedEstimateText] = useState("");
@@ -132,7 +133,7 @@ if (file) {
   setReview(null);
   setAnalyzed(false);
   setUploadError("");
-
+setQuestionsCopied(false);
   if (file.size > 5 * 1024 * 1024) {
     setFileName("");
     setEstimateFile(null);
@@ -323,6 +324,27 @@ if (file) {
   <h3 style={{ marginTop: 0 }}>
     ❓ Questions to Ask Your Mechanic
   </h3>
+  
+<button
+  type="button"
+  className="btn"
+  onClick={async () => {
+    try {
+      await navigator.clipboard.writeText(
+        review.questions
+          .map((question, index) => `${index + 1}. ${question}`)
+          .join("\n")
+      );
+      setQuestionsCopied(true);
+    } catch {
+      setQuestionsCopied(false);
+      alert("Unable to copy questions. Please try again.");
+    }
+  }}
+>
+  {questionsCopied ? "✓ Questions Copied!" : "Copy Questions"}
+</button>
+
   <p className="muted">
     Use these questions when speaking with your repair shop
     before approving the recommended work.
