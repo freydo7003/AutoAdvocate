@@ -45,6 +45,7 @@ export default function AnalyzeRepairPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
 const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisResult | null>(null);
 const [isLoading, setIsLoading] = useState(false);
+const [analysisError, setAnalysisError] = useState("");
 const [loadingMessage, setLoadingMessage] = useState("");
 const [isReadingEstimate, setIsReadingEstimate] = useState(false);
 const [estimateFile, setEstimateFile] = useState<File | null>(null);
@@ -115,6 +116,7 @@ async function analyzeRepair(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 setIsLoading(true);
 setAiAnalysis(null);
+setAnalysisError("");
 if (estimateFile) {
   setLoadingMessage("Reading your repair estimate...");
   await testEstimateUpload(estimateFile);
@@ -144,6 +146,9 @@ ${extractedEstimateText}`
       `,
     }),
   });
+if (!response.ok) {
+  throw new Error("Repair analysis request failed.");
+}
 
   const data = await response.json();
 console.log(data.analysis);
@@ -151,6 +156,9 @@ console.log(data.analysis);
 } catch (error) {
   console.error(error);
   setAiAnalysis(null);
+  setAnalysisError(
+    "We couldn't complete your repair analysis. Please try again in a moment."
+  );
 } finally {
   setIsLoading(false);
   setLoadingMessage("");
@@ -334,13 +342,34 @@ if (
     📄 Upload Repair Estimate (Optional)
   </label>
 
+<p
+  style={{
+    fontSize: "0.85rem",
+    color: "#64748b",
+    marginTop: "6px",
+    marginBottom: "12px",
+    lineHeight: 1.5,
+  }}
+>
+  Supported formats: PDF, JPG, and PNG. Upload a clear copy
+  of your mechanic's estimate so AutoAdvocate can review
+  the listed repairs and prices. Remove any personal
+  information you don't want to share before uploading.
+</p>
+
  <input
   id="estimateFile"
   type="file"
   accept=".pdf,.png,.jpg,.jpeg"
   onChange={(event) => {
     const selectedFile = event.target.files?.[0] ?? null;
-
+if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
+  alert("This file is too large. Please upload a file smaller than 5 MB.");
+  event.target.value = "";
+  setEstimateFile(null);
+  setExtractedEstimateText("");
+  return;
+}
     setEstimateFile(selectedFile);
     setExtractedEstimateText("");
 
@@ -391,19 +420,43 @@ if (
 </button>
         </form>
       </section>
+{analysisError && (
+  <div
+    role="alert"
+    style={{
+      backgroundColor: "#fee2e2",
+      border: "1px solid #ef4444",
+      borderRadius: "10px",
+      padding: "16px",
+      marginTop: "20px",
+      color: "#991b1b",
+    }}
+  >
+    <strong>⚠️ Analysis Unavailable</strong>
+    <p style={{ marginBottom: 0 }}>{analysisError}</p>
+  </div>
+)}
 {isLoading && (
-  <div className="card analyzing-card">
-    <div className="analyzing-spinner" />
+  <div className="card analyzing-card" role="status" aria-live="polite">
+    <div className="analyzing-spinner" aria-hidden="true" />
 
     <div>
-      <h2>AutoAdvocate AI Analysis</h2>
-      <p>Analyzing your repair information...</p>
+      <h2>Analyzing Your Repair</h2>
+      <p>
+        AutoAdvocate is reviewing your vehicle information,
+        reported symptoms, and repair recommendations.
+      </p>
       <p className="muted">
-        This may take several seconds. Please keep this page open.
+        We're evaluating possible causes, repair costs,
+        and questions to ask your shop.
+      </p>
+      <p className="muted">
+        This may take a little time. Please keep this page open.
       </p>
     </div>
   </div>
 )}
+
 
 {aiAnalysis && (
   <section className="card">

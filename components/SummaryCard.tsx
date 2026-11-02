@@ -69,11 +69,14 @@ export default function SummaryCard({
   value={repairTime.split(";")[0].trim()}
 />
 
-    <SummaryItem
-      icon="🚗"
-      title="Driving Guidance"
-      value={drivingLabels[safeToDrive]}
-    />
+
+<SummaryItem
+  icon="🚗"
+  title="Driving Guidance"
+  value={drivingLabels[safeToDrive]}
+  disclaimer="Based on reported symptoms only. Not a physical vehicle inspection."
+/>
+
 
     <SummaryItem
       icon="📅"

@@ -25,7 +25,7 @@ if (isUnrated) {
 }
 
   return (
-    <ReportCard title="Mechanic Fairness Score" icon="🛡️">
+    <ReportCard title="Repair Quote Fairness" icon="🛡️">
       <div className={`fairness-score-box ${toneClass}`}>
         <div>
           <span className="fairness-score-label">Quote Fairness</span>

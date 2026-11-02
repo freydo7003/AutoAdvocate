@@ -16,13 +16,22 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    if (file.type !== "image/jpeg" && file.type !== "image/png") {
-      return NextResponse.json(
-        { error: "Please upload a PNG or JPEG image." },
-        { status: 400 }
-      );
-    }
+if (file.size > 5 * 1024 * 1024) {
+  return NextResponse.json(
+    { error: "File too large. Maximum upload size is 5 MB." },
+    { status: 413 }
+  );
+}
+if (
+  file.type !== "image/jpeg" &&
+  file.type !== "image/png" &&
+  file.type !== "application/pdf"
+) {
+  return NextResponse.json(
+    { error: "Please upload a PDF, PNG, or JPEG file." },
+    { status: 400 }
+  );
+}
 
     const fileBuffer = Buffer.from(await file.arrayBuffer());
     const base64Image = fileBuffer.toString("base64");
@@ -51,11 +60,17 @@ Return only the extracted estimate text.
 Do not summarize it.
               `.trim(),
             },
-            {
-              type: "input_image",
-              image_url: imageDataUrl,
-              detail: "high",
-            },
+           file.type === "application/pdf"
+  ? {
+      type: "input_file" as const,
+      filename: file.name,
+      file_data: imageDataUrl,
+    }
+  : {
+      type: "input_image" as const,
+      image_url: imageDataUrl,
+      detail: "high" as const,
+    }, 
           ],
         },
       ],

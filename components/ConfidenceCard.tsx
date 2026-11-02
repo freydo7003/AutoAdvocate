@@ -41,6 +41,20 @@ export default function ConfidenceCard({
       <h2 style={{ marginTop: 0 }}>{confidence}%</h2>
 
       <p>{confidenceReason}</p>
+     <p
+  style={{
+    fontSize: "0.85rem",
+    color: "#64748b",
+    marginTop: "12px",
+    lineHeight: 1.5,
+  }}
+>
+  <strong>What does this score mean?</strong> This score reflects
+  the AI's confidence in its assessment based on the information
+  provided. A lower score means more diagnostic information may
+  be needed. It does not represent the probability that a
+  particular repair is necessary.
+</p> 
     </ReportCard>
   );
 }
