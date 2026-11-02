@@ -13,20 +13,38 @@ export default function CarRepairEstimateTooHighPage() {
       <div className="card">
         <h1>Is My Car Repair Estimate Too High?</h1>
 
-        <p>
-          Getting a large repair estimate can be stressful, especially when
-          you don't know whether the recommended repairs or prices are
-          reasonable.
-        </p>
+        
+<p>
+  <strong>A high car repair estimate does not always mean your
+  mechanic is overcharging you.</strong> Some repairs genuinely
+  require expensive parts or several hours of labor. However,
+  an estimate may deserve a closer look if the labor charges
+  seem excessive, the parts prices are unusually high, or
+  the shop cannot explain why the repair is necessary.
+</p>
 
-        <p>
-          Before approving the work, there are several things you can check to
-          better understand what you're being charged for.
-        </p>
+<p>
+  Before approving an expensive repair, ask for an itemized
+  estimate showing parts, labor, diagnostic fees, and any
+  additional charges. Compare the total with another
+  reputable repair shop and ask what testing confirmed
+  the recommended repair.
+</p>
 
-        <Link href="/scan" className="btn">
-          Scan My Repair Estimate
-         <h2>What to Check on a Repair Estimate</h2>
+<p>
+  Remember that a repair can be reasonably priced but
+  still be unnecessary if the underlying problem has
+  not been properly diagnosed.
+</p>
+
+
+        
+<Link href="/scan" className="btn">
+  Scan My Repair Estimate
+</Link>
+
+<h2>What to Check on a Repair Estimate</h2>
+
 
 <ul>
   <li>
@@ -51,13 +69,70 @@ export default function CarRepairEstimateTooHighPage() {
   </li>
 </ul>
 
-<h2>When Should You Get a Second Opinion?</h2>
+<h3>Example: Understanding Labor Charges</h3>
 
 <p>
-  Consider getting a second opinion when the repair is expensive, the estimate
-  recommends replacing several major parts at once, or the shop cannot clearly
-  explain the testing that confirmed the diagnosis.
+  Suppose a repair shop charges $150 per labor hour
+  and estimates 4 hours to complete a repair.
+  The labor portion of your estimate would be $600,
+  before parts, taxes, and additional fees.
 </p>
+
+<p>
+  A high labor charge does not automatically mean
+  you're being overcharged. Ask the shop how many
+  labor hours the repair requires and what hourly
+  rate they charge. You can then compare those
+  figures with estimates from other local shops.
+</p>
+
+<p>
+  Keep in mind that shops may use standardized labor
+  guides to estimate repair time. The billed labor
+  hours may differ from the actual time a technician
+  spends completing the repair.
+</p>
+
+<h2>When Should You Get a Second Opinion?</h2>
+
+
+<p>
+  Getting a second opinion can be especially valuable
+  when you're facing an expensive repair or you're
+  unsure whether the recommended work is necessary.
+  Consider another opinion if:
+</p>
+
+<ul>
+  <li>
+    The shop recommends replacing several expensive
+    components without explaining the diagnosis.
+  </li>
+  <li>
+    The estimate is significantly higher than another
+    quote for the same repair.
+  </li>
+  <li>
+    The mechanic recommends replacing a part based
+    only on a diagnostic trouble code.
+  </li>
+  <li>
+    The shop cannot explain what testing confirmed
+    the suspected problem.
+  </li>
+  <li>
+    You're being pressured to approve a costly repair
+    without a clear explanation.
+  </li>
+</ul>
+
+<p>
+  When comparing estimates, make sure both shops are
+  quoting the same work, including comparable parts,
+  labor, warranties, and fees. A cheaper estimate
+  isn't necessarily a better estimate.
+</p>
+
 
 <h2>Questions to Ask Before Approving Repairs</h2>
 
@@ -76,7 +151,7 @@ export default function CarRepairEstimateTooHighPage() {
   explain the charges, concerns, and questions you may want to ask before
   approving the work.
 </p> 
-        </Link>
+        
      <h2>Related Car Repair Guides</h2>
 
 <ul>
