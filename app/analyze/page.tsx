@@ -501,6 +501,23 @@ if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
   safeToDrive={aiAnalysis.safeToDrive}
   urgency={aiAnalysis.urgency}
 />
+<VerdictCard
+  severity={aiAnalysis.severity}
+  verdict={aiAnalysis.verdict}
+  fairnessRating={aiAnalysis.fairnessRating}
+  actionItems={aiAnalysis.actionItems}
+/>
+
+<ReportCard title="Top 3 Questions to Ask Your Mechanic" icon="❓">
+  <ol style={{ paddingLeft: "24px", lineHeight: 1.6 }}>
+    {aiAnalysis.questions.slice(0, 3).map((question, index) => (
+      <li key={index} style={{ marginBottom: "12px" }}>
+        {question}
+      </li>
+    ))}
+  </ol>
+</ReportCard>
+
 <FairnessScoreCard
   score={aiAnalysis.fairnessScore}
   rating={aiAnalysis.fairnessRating}
@@ -515,12 +532,7 @@ if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
   confidence={aiAnalysis.confidence}
   confidenceReason={aiAnalysis.confidenceReason}
 />
-<VerdictCard
-  severity={aiAnalysis.severity}
-  verdict={aiAnalysis.verdict}
-  fairnessRating={aiAnalysis.fairnessRating}
-  actionItems={aiAnalysis.actionItems}
-/>
+
 
 <TimelineCard
   urgency={aiAnalysis.urgency}
